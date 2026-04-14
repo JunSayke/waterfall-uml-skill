@@ -46,14 +46,13 @@ The agent is instructed to build diagrams in this exact order, ensuring each fee
     ├── erd.puml               # Reference ERD diagram
     ├── sequence.puml          # Reference Sequence diagram
     ├── usecase.puml           # Reference Use Case diagram
-    └── README.template.md     # Template for generating system spec documentation
+    └── README.template.md     # Template for generating system spec documentation (use case description is define here)
 ```
 
 ## Features
 
 - **Zero-Hallucination Formatting:** Enforces strict `@startuml` formatting with `skinparam monochrome true` and blocks the LLM from adding unsupported styling.
 - **Intelligent Output Routing:** Automatically prompts the user for a save location (defaults to `docs/<module-name>/diagrams/`).
-- **Source of Truth Sync:** Optionally generates a `README.md` spec document mapping to the generated diagrams if the user confirms the diagrams are the implementation source of truth.
 - **Technology Aware:** Automatically tailors Class Diagrams and ERDs to the user's specific tech stack.
 
 ## License

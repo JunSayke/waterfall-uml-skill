@@ -27,9 +27,9 @@ so that naming, actors, flows, and entities remain coherent across the full set.
 
 ### Ask the user (once, before generating anything)
 
-Ask both questions together in a single message:
+Ask this question in a single message:
 
-**A) Output location** — Where should the artifact files be saved?
+**Output location** — Where should the artifact files be saved?
 
 > Default (press Enter to accept):
 >
@@ -38,13 +38,6 @@ Ask both questions together in a single message:
 > ```
 >
 > A custom path is accepted as-is.
-
-**B) Purpose** — Are these diagrams the source of truth for implementation?
-
-- **Yes** → also generate `docs/<module-name>/README.md` (see §6)
-- **No** → diagrams only, no README
-
-If the user skips or says "default", use the defaults above.
 
 ---
 
@@ -300,15 +293,14 @@ Before presenting the final set:
 - [ ] UC-IDs are defined in 3.1 and cited in 3.2 and 3.3
 - [ ] Diagrams are at behavioral/structural level — no implementation detail
 - [ ] Optional diagrams: included with brief rationale or skipped with reason stated
-- [ ] README.md generated only if user confirmed "source of truth for implementation"
+- [ ] README.md generated and saved to `docs/<module-name>/README.md`
 - [ ] File names match the convention in §1
 
 ---
 
 ## 6. README.md — Spec Document
 
-Generate **only** when the user confirms the diagrams serve as source of truth for implementation.
-Save to `docs/<module-name>/README.md`.
+The skill always generates a spec document and saves it to `docs/<module-name>/README.md`.
 
 **Strictly follow this format — do not add, remove, or reorder sections.**
 
@@ -337,15 +329,25 @@ One paragraph. What is this module? What problem does it solve? Who uses it?
 
 ## Use Cases
 
-| UC-ID | Name   | Primary Actor | Description    |
-| ----- | ------ | ------------- | -------------- |
-| UC-01 | {Name} | {Actor}       | {One sentence} |
+| UC-ID | Name   | Primary Actor | Short Description |
+| ----- | ------ | ------------- | ----------------- |
+| UC-01 | {Name} | {Actor}       | {One sentence}    |
+
+---
+
+## Use Case Descriptions
+
+Provide a table with the detailed description for each critical use case. This captures the precondition, main flow (2–6 steps), postcondition, and exceptions.
+
+| UC-ID | Name   | Actor(s) | Precondition   | Main Flow            | Postcondition   | Exceptions   |
+| ----- | ------ | -------- | -------------- | -------------------- | --------------- | ------------ |
+| UC-01 | {Name} | {Actor}  | {Precondition} | 1. {Step}\n2. {Step} | {Postcondition} | {Exceptions} |
 
 ---
 
 ## Flows
 
-One subsection per critical use case. Plain language — what happens, not how.
+One subsection per critical use case for readability. Keep to the "what", not the "how".
 
 ### UC-XX: {Name}
 

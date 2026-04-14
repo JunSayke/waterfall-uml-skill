@@ -1,4 +1,4 @@
-# {Module Name}
+# User Authentication
 
 > **Status**: Draft | Review | Approved  
 > **Last Updated**: YYYY-MM-DD  
@@ -8,28 +8,38 @@
 
 ## Overview
 
-One paragraph. What is this module? What problem does it solve? Who uses it?
+The User Authentication module provides secure account lifecycle and access-control functionality for the application. It solves the problem of safely onboarding and identifying users by centralizing registration, login, logout, password reset, and session management while enforcing security constraints (password hashing, account lockout, token expiry). This module is consumed by client applications (web and mobile), API clients, and backend services that need a verified user context to authorize requests and personalize behavior.
 
 ---
 
 ## Actors
 
-| Actor | Role |
-|-------|------|
-| Guest | Unauthenticated user interacting with the system |
-| Registered User | Authenticated user with a valid account |
-| System | Automated processes (email delivery, token expiry, etc.) |
+| Actor           | Role                                                     |
+| --------------- | -------------------------------------------------------- |
+| Guest           | Unauthenticated user interacting with the system         |
+| Registered User | Authenticated user with a valid account                  |
+| System          | Automated processes (email delivery, token expiry, etc.) |
 
 ---
 
-## Use Cases
+## Use Cases (Summary)
 
-| UC-ID | Name | Primary Actor | Description |
-|-------|------|---------------|-------------|
-| UC-01 | Register Account | Guest | A guest creates a new account with email and password |
-| UC-02 | Log In | Guest, Registered User | A user authenticates and receives a session token |
-| UC-03 | Log Out | Registered User | A user invalidates their active session |
-| UC-04 | Reset Password | Guest | A user requests a password reset link via email |
+| UC-ID | Name             | Primary Actor          | Short Description                                     |
+| ----- | ---------------- | ---------------------- | ----------------------------------------------------- |
+| UC-01 | Register Account | Guest                  | A guest creates a new account with email and password |
+| UC-02 | Log In           | Guest, Registered User | A user authenticates and receives a session token     |
+| UC-03 | Log Out          | Registered User        | A user invalidates their active session               |
+| UC-04 | Reset Password   | Guest                  | A user requests a password reset link via email       |
+
+---
+
+## Use Case Descriptions
+
+Provide a detailed table for each critical use case. This stores the precondition, main flow (2–6 steps), postcondition, and exceptions — information that cannot be represented inside `.puml` files.
+
+| UC-ID | Name             | Actor(s) | Precondition                 | Main Flow                                                                                                           | Postcondition                      | Exceptions           |
+| ----- | ---------------- | -------- | ---------------------------- | ------------------------------------------------------------------------------------------------------------------- | ---------------------------------- | -------------------- |
+| UC-01 | Register Account | Guest    | Email not already registered | 1. User provides email and password.\n2. System validates input.\n3. System creates account and sends confirmation. | Account created, confirmation sent | Email already in use |
 
 ---
 
@@ -49,11 +59,11 @@ Describe the main flows in plain language. One subsection per critical use case.
 
 ## Domain Entities
 
-| Entity | Responsibility |
-|--------|---------------|
-| User | Holds account identity and credential data |
-| Session | Represents an active authenticated session |
-| PasswordReset | Tracks a pending password reset request |
+| Entity        | Responsibility                             |
+| ------------- | ------------------------------------------ |
+| User          | Holds account identity and credential data |
+| Session       | Represents an active authenticated session |
+| PasswordReset | Tracks a pending password reset request    |
 
 ---
 
@@ -76,10 +86,10 @@ Describe the main flows in plain language. One subsection per critical use case.
 
 ## Diagrams
 
-| Diagram | File |
-|---------|------|
-| Use Case | `diagrams/usecase.puml` |
+| Diagram  | File                     |
+| -------- | ------------------------ |
+| Use Case | `diagrams/usecase.puml`  |
 | Activity | `diagrams/activity.puml` |
 | Sequence | `diagrams/sequence.puml` |
-| ERD | `diagrams/erd.puml` |
-| Class | `diagrams/class.puml` |
+| ERD      | `diagrams/erd.puml`      |
+| Class    | `diagrams/class.puml`    |
