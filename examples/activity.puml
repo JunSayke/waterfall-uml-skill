@@ -1,0 +1,54 @@
+@startuml
+skinparam monochrome true
+
+' ──────────────────────────────────────────
+' Module : User Authentication
+' Diagram: Activity
+' Covers : UC-02 Log In, UC-05 Validate Credentials
+' ──────────────────────────────────────────
+
+|Guest|
+start
+:Enter email and password;
+
+|Authentication Module|
+:Receive login request;
+if (Input valid?) then (no)
+  :Return validation error;
+  |Guest|
+  :View error message;
+  stop
+else (yes)
+endif
+
+:Look up account by email;
+if (Account exists?) then (no)
+  :Return "account not found" error;
+  |Guest|
+  :View error message;
+  stop
+else (yes)
+endif
+
+:Verify password hash;
+if (Password matches?) then (no)
+  :Increment failed attempt counter;
+  if (Attempts >= limit?) then (yes)
+    :Lock account temporarily;
+    :Notify user by email;
+  else (no)
+  endif
+  |Guest|
+  :View invalid credentials error;
+  stop
+else (yes)
+endif
+
+:Generate session token;
+:Store session;
+
+|Registered User|
+:Access authenticated area;
+stop
+
+@enduml

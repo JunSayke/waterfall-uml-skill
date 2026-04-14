@@ -1,0 +1,39 @@
+@startuml
+skinparam monochrome true
+
+' ──────────────────────────────────────────
+' Module : User Authentication
+' Diagram: Entity Relationship
+' ──────────────────────────────────────────
+
+entity "User" as user {
+  * id         : UUID <<PK>>
+  --
+  * email      : VARCHAR(255)
+  * password   : VARCHAR(255)
+  * status     : ENUM(active, locked)
+  * created_at : TIMESTAMP
+}
+
+entity "Session" as session {
+  * id         : UUID <<PK>>
+  --
+  * user_id    : UUID <<FK>>
+  * token      : VARCHAR(512)
+  * expires_at : TIMESTAMP
+  * created_at : TIMESTAMP
+}
+
+entity "PasswordReset" as reset {
+  * id         : UUID <<PK>>
+  --
+  * user_id    : UUID <<FK>>
+  * token      : VARCHAR(512)
+  * expires_at : TIMESTAMP
+  * used       : BOOLEAN
+}
+
+user ||--o{ session : "has"
+user ||--o{ reset   : "requests"
+
+@enduml

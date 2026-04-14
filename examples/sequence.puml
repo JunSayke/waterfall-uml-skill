@@ -1,0 +1,38 @@
+@startuml
+skinparam monochrome true
+
+' ──────────────────────────────────────────
+' Module : User Authentication
+' Diagram: Sequence — UC-02 Log In
+' ──────────────────────────────────────────
+
+actor       "Registered User" as User
+participant "AuthController"  as Controller
+participant "AuthService"     as Service
+participant "UserRepository"  as Repo
+participant "SessionStore"    as Session
+
+User -> Controller : POST /auth/login\n{ email, password }
+
+Controller -> Service : login(email, password)
+
+Service -> Repo : findByEmail(email)
+alt account not found
+  Repo --> Service : null
+  Service --> Controller : AccountNotFoundException
+  Controller --> User : 401 Unauthorized
+else account found
+  Repo --> Service : User
+  Service -> Service : verifyPassword(hash)
+  alt password mismatch
+    Service --> Controller : InvalidCredentialsException
+    Controller --> User : 401 Unauthorized
+  else password valid
+    Service -> Session : create(userId)
+    Session --> Service : sessionToken
+    Service --> Controller : sessionToken
+    Controller --> User : 200 OK { token }
+  end
+end
+
+@enduml

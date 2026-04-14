@@ -1,0 +1,56 @@
+@startuml
+skinparam monochrome true
+
+' ──────────────────────────────────────────
+' Module : User Authentication
+' Diagram: Class
+' ──────────────────────────────────────────
+
+interface "IUserRepository" as IUserRepo <<Repository>> {
+  + findByEmail(email: String): User
+  + save(user: User): User
+}
+
+interface "ISessionStore" as ISessionStore {
+  + create(userId: String): String
+  + invalidate(token: String): void
+}
+
+class "AuthController" <<Controller>> {
+  - authService: AuthService
+  + login(request: LoginRequest): Response
+  + logout(token: String): Response
+}
+
+class "AuthService" <<Service>> {
+  - userRepository: IUserRepository
+  - sessionStore: ISessionStore
+  + login(email: String, password: String): String
+  + logout(token: String): void
+  - verifyPassword(raw: String, hash: String): Boolean
+}
+
+class "UserRepository" <<Repository>> {
+  + findByEmail(email: String): User
+  + save(user: User): User
+}
+
+class "User" {
+  + id: String
+  + email: String
+  - passwordHash: String
+  + status: UserStatus
+}
+
+enum "UserStatus" {
+  ACTIVE
+  LOCKED
+}
+
+AuthController  --> AuthService    : uses
+AuthService     --> IUserRepo      : depends on
+AuthService     --> ISessionStore  : depends on
+UserRepository  ..|> IUserRepo     : implements
+User            *-- UserStatus     : has
+
+@enduml
